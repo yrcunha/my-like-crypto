@@ -2,30 +2,36 @@ package server
 
 import (
 	"context"
-	"encoding/json"
 	"log"
 
 	"exemple.com/my-like-crypto-server/src/model"
 	"exemple.com/my-like-crypto-server/src/proto/gen"
+	"exemple.com/my-like-crypto-server/src/repositories"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type Server struct {
 	gen.UnimplementedScoreServiceServer
+	Collection *mongo.Collection
 }
 
 func (server *Server) CreateVote(ctx context.Context, vote *gen.CreateVoteReq) (*gen.CreateVoteRes, error) {
-	body, marchalError := json.Marshal(vote.Vote)
-	if marchalError != nil {
-		log.Fatal(marchalError)
-	}
-	unmarshalVote := model.Votes{}
-	unmarshalError := json.Unmarshal(body, &unmarshalVote)
+	result := &gen.CreateVoteRes{}
+	unmarshalVote, unmarshalError := model.UnmarshalVote(vote)
 	if unmarshalError != nil {
 		log.Fatalf("Error in unmarshal method: %v", unmarshalError)
+		result.Success = false
+		return result, nil
 	}
-	return &gen.CreateVoteRes{
-		Success: true,
-	}, nil
+	repositorieError := repositorie.CreateVotes(server.Collection, ctx, unmarshalVote)
+	if repositorieError != nil {
+		log.Fatalf("Error in insert database: %v", repositorieError)
+		result.Success = false
+		return result, nil
+	} else {
+		result.Success = true
+		return result, nil
+	}
 }
 
 func (server *Server) ListVotes(_ *gen.ListVotesReq, stream gen.ScoreService_ListVotesServer) error {
