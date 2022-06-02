@@ -2,7 +2,6 @@ package server
 
 import (
 	"context"
-	"log"
 
 	"exemple.com/my-like-crypto-server/src/model"
 	"exemple.com/my-like-crypto-server/src/proto/gen"
@@ -16,21 +15,17 @@ type Server struct {
 }
 
 func (server *Server) CreateVote(ctx context.Context, vote *gen.CreateVoteReq) (*gen.CreateVoteRes, error) {
-	result := &gen.CreateVoteRes{}
 	unmarshalVote, unmarshalError := model.UnmarshalVote(vote)
 	if unmarshalError != nil {
-		log.Fatalf("Error in unmarshal method: %v", unmarshalError)
-		result.Success = false
-		return result, nil
+		return nil, unmarshalError
 	}
 	repositorieError := repositorie.CreateVotes(server.Collection, ctx, unmarshalVote)
 	if repositorieError != nil {
-		log.Fatalf("Error in insert database: %v", repositorieError)
-		result.Success = false
-		return result, nil
+		return nil, repositorieError
 	} else {
-		result.Success = true
-		return result, nil
+		return &gen.CreateVoteRes{
+			Success: true,
+		}, nil
 	}
 }
 
