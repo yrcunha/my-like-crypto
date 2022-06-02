@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net"
+	"os"
 
 	"exemple.com/my-like-crypto-server/src/proto/gen"
 	"exemple.com/my-like-crypto-server/src/server"
@@ -23,7 +24,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error loading .env file")
 	}
-	clientOptions := options.Client().ApplyURI("mongodb://docker:mongo@localhost:27017/")
+	clientOptions := options.Client().ApplyURI(os.Getenv("DATABASE_URL"))
 	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -32,8 +33,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	collection = client.Database("my-like-crypto").Collection("vote")
-	listen, listenError := net.Listen("tcp", ":8200")
+	collection = client.Database(os.Getenv("DATABASE")).Collection(os.Getenv("COLLECTION"))
+	listen, listenError := net.Listen("tcp", os.Getenv("PORT"))
 	if listenError != nil {
 		log.Fatalf("failed to listen: %v", listenError)
 	}
@@ -42,7 +43,7 @@ func main() {
 	}
 	grpcServer := grpc.NewServer()
 	gen.RegisterScoreServiceServer(grpcServer, &vote)
-	log.Println("Listening on Port: 8200!")
+	log.Printf("Listening on Port %v!", os.Getenv("PORT"))
 	if grpcError := grpcServer.Serve(listen); grpcError != nil {
 		log.Fatalf("failed to serve: %s", grpcError)
 	}
