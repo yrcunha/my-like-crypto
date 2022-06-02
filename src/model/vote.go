@@ -14,31 +14,31 @@ type Crypto struct {
 
 type Votes struct {
 	ID      string    `json:"id,omitempty" validate:"required,uuid"`
-	Author  string    `json:"author" validate:"required,base64"`
+	Author  string    `json:"author" validate:"required"`
 	MyVotes [5]Crypto `json:"cryptos" validate:"required,len=5,dive,required"`
 }
 
 var validate *validator.Validate
 
-func UnmarshalVote(vote *gen.CreateVoteReq) (*Votes, error) {
+func UnmarshalVote(vote *gen.Vote) (*Votes, error) {
 	unmarshalVote := &Votes{
-		Author: vote.Vote.Author,
+		Author: vote.Author,
 	}
-	if vote.Vote.Id == "" {
+	if vote.Id == "" {
 		uuid, _ := uuid.NewUUID()
 		unmarshalVote.ID = uuid.String()
 	} else {
-		unmarshalVote.ID = vote.Vote.Id
+		unmarshalVote.ID = vote.Id
 	}
-	for key := range vote.Vote.Cryptos {
-		if vote.Vote.Cryptos[key].Downvote == vote.Vote.Cryptos[key].Upvote {
+	for key := range vote.Cryptos {
+		if vote.Cryptos[key].Downvote == vote.Cryptos[key].Upvote {
 			unmarshalVote.MyVotes[key].Downvote = false
 			unmarshalVote.MyVotes[key].Upvote = false
 		} else {
-			unmarshalVote.MyVotes[key].Downvote = vote.Vote.Cryptos[key].Downvote
-			unmarshalVote.MyVotes[key].Upvote = vote.Vote.Cryptos[key].Upvote
+			unmarshalVote.MyVotes[key].Downvote = vote.Cryptos[key].Downvote
+			unmarshalVote.MyVotes[key].Upvote = vote.Cryptos[key].Upvote
 		}
-		unmarshalVote.MyVotes[key].Name = vote.Vote.Cryptos[key].Name.String()
+		unmarshalVote.MyVotes[key].Name = vote.Cryptos[key].Name.String()
 	}
 	validate = validator.New()
 	validationErrors := validate.StructExcept(unmarshalVote)

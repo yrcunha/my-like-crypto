@@ -15,7 +15,7 @@ type Server struct {
 }
 
 func (server *Server) CreateVote(ctx context.Context, vote *gen.CreateVoteReq) (*gen.CreateVoteRes, error) {
-	unmarshalVote, unmarshalError := model.UnmarshalVote(vote)
+	unmarshalVote, unmarshalError := model.UnmarshalVote(vote.Vote)
 	if unmarshalError != nil {
 		return nil, unmarshalError
 	}
