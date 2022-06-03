@@ -24,16 +24,18 @@ var (
 
 func TestUpvoteOrDownvoteRepositories(t *testing.T) {
 	votes.Name = "BTC"
-	upvoteError := repositorie.UpvoteOrDownvote(collection, ctx, votes, true)
-	assert.Nil(t, upvoteError)
+	err := repositorie.UpvoteOrDownvote(collection, ctx, votes, true)
+	assert.Nil(t, err)
 	downvoteError := repositorie.UpvoteOrDownvote(collection, ctx, votes, false)
 	assert.Nil(t, downvoteError)
+	collection.Drop(ctx)
 }
 
 func TestCreateRepositories(t *testing.T) {
 	data := &model.Data{Name: "ETH", Upvote: 0, Downvote: 0}
-	createError := repositorie.CreateCrypto(collection, ctx, data)
-	assert.Nil(t, createError)
+	err := repositorie.CreateCrypto(collection, ctx, data)
+	assert.Nil(t, err)
+	collection.Drop(ctx)
 }
 
 func TestDeleteRepositories(t *testing.T) {
@@ -46,6 +48,22 @@ func TestDeleteRepositories(t *testing.T) {
 		"downvote": 0,
 	}
 	collection.InsertOne(ctx, data)
-	deleteError := repositorie.DeleteCrypto(collection, ctx, id)
-	assert.Nil(t, deleteError)
+	err := repositorie.DeleteCrypto(collection, ctx, id)
+	assert.Nil(t, err)
+	collection.Drop(ctx)
+}
+
+func TestListRepositories(t *testing.T) {
+	data := bson.M{
+		"crypto":   "ETH",
+		"upvote":   10,
+		"downvote": 100,
+	}
+	collection.InsertOne(ctx, data)
+	record, err := repositorie.ListVotes(collection)
+	assert.Nil(t, err)
+	assert.Equal(t, record[0].Crypto, "ETH")
+	assert.Equal(t, record[0].Upvote, 10)
+	assert.Equal(t, record[0].Downvote, 100)
+	collection.Drop(ctx)
 }
