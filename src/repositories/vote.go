@@ -39,18 +39,29 @@ func CreateCrypto(collection *mongo.Collection, ctx context.Context, vote *model
 		"upvote":   vote.Upvote,
 		"downvote": vote.Downvote,
 	}
-	_, insertError := collection.InsertOne(ctx, data)
-	if insertError != nil {
-		return insertError
+	_, err := collection.InsertOne(ctx, data)
+	if err != nil {
+		return err
 	}
 	return nil
 }
 
 func DeleteCrypto(collection *mongo.Collection, ctx context.Context, vote string) error {
 	id, _ := primitive.ObjectIDFromHex(vote)
-	_, deleteError := collection.DeleteOne(ctx, bson.M{"_id": id})
-	if deleteError != nil {
-		return deleteError
+	_, err := collection.DeleteOne(ctx, bson.M{"_id": id})
+	if err != nil {
+		return err
 	}
 	return nil
+}
+
+func ListVotes(collection *mongo.Collection) ([]*model.Record, error) {
+	var ctx context.Context
+	data, err := collection.Find(ctx, bson.M{})
+	if err != nil {
+		return nil, err
+	}
+	var records []*model.Record
+	data.All(context.TODO(), &records)
+	return records, nil
 }

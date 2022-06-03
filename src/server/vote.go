@@ -61,3 +61,17 @@ func (server *Server) DeleteCrypto(ctx context.Context, vote *gen.DeleteCryptoRe
 		}, nil
 	}
 }
+
+func (server *Server) RecordVotes(_ *gen.RecordVotesReq, stream gen.VotesService_RecordVotesServer) error {
+	data, _ := repositorie.ListVotes(server.Collection)
+	for _, data := range data {
+		if err := stream.Send(&gen.RecordVotesRes{
+			Name:     data.Crypto,
+			Upvote:   int64(data.Upvote),
+			Downvote: int64(data.Downvote),
+		}); err != nil {
+			return err
+		}
+	}
+	return nil
+}

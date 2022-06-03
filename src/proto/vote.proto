@@ -51,12 +51,8 @@ message DeleteCryptoRes {
 
 message RecordVotesReq {}
 
-message Record {
-  Name name = 1;
-  bool upvote = 2;
-  bool downvote = 3;
-}
-
 message RecordVotesRes {
-  repeated Record record = 1;
+  string name = 1;
+  int64 upvote = 2;
+  int64 downvote = 3;
 }

@@ -12,6 +12,12 @@ type Data struct {
 	Downvote int    `json:"downvote"`
 }
 
+type Record struct {
+	Crypto   string `json:"crypto"`
+	Upvote   int    `json:"upvote"`
+	Downvote int    `json:"downvote"`
+}
+
 func UnmarshalVote(name string, vote string) *Crypto {
 	unmarshal := &Crypto{
 		Name: name,
