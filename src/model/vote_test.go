@@ -9,25 +9,25 @@ import (
 )
 
 func TestUnmarshalVote(t *testing.T) {
-	body := &gen.Vote{
-		Id:     "",
-		Author: "Yuri Rodrigues",
-		Cryptos: []*gen.Crypto{
-			{
-				Name:     0,
-				Upvote:   false,
-				Downvote: true,
-			}, {
-				Name:     1,
-				Upvote:   true,
-				Downvote: true,
-			},
-		},
+	body := &gen.UpvoteReq{
+		Name: 0,
 	}
-	unmarshal, _ := model.UnmarshalVote(body)
-	assert.Equal(t, unmarshal.Author, "Yuri Rodrigues")
-	assert.Equal(t, unmarshal.MyVotes[0].Name, "BTC")
-	assert.Equal(t, unmarshal.MyVotes[1].Name, "ETH")
-	assert.Equal(t, unmarshal.MyVotes[1].Upvote, false)
-	assert.Equal(t, unmarshal.MyVotes[1].Downvote, false)
+	upvote := model.UnmarshalVote(body.Name.String(), "upvote")
+	assert.Equal(t, upvote.Name, "BTC")
+	assert.Equal(t, upvote.Upvote, true)
+	assert.Equal(t, upvote.Downvote, false)
+	downvote := model.UnmarshalVote(body.Name.String(), "downvote")
+	assert.Equal(t, downvote.Name, "BTC")
+	assert.Equal(t, downvote.Upvote, false)
+	assert.Equal(t, downvote.Downvote, true)
+}
+
+func TestUnmarshalCrypto(t *testing.T) {
+	body := &gen.CreateCryptoReq{
+		Name: 0,
+	}
+	upvote := model.UnmarshalCrypto(body.Name.String())
+	assert.Equal(t, upvote.Name, "BTC")
+	assert.Equal(t, upvote.Upvote, 0)
+	assert.Equal(t, upvote.Downvote, 0)
 }

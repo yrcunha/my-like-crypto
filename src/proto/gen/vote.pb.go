@@ -20,26 +20,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type CryptosName int32
+type Name int32
 
 const (
-	CryptosName_BTC CryptosName = 0
-	CryptosName_ETH CryptosName = 1
-	CryptosName_LTC CryptosName = 2
-	CryptosName_XRP CryptosName = 3
-	CryptosName_BNB CryptosName = 4
+	Name_BTC Name = 0
+	Name_ETH Name = 1
+	Name_LTC Name = 2
+	Name_XRP Name = 3
+	Name_BNB Name = 4
 )
 
-// Enum value maps for CryptosName.
+// Enum value maps for Name.
 var (
-	CryptosName_name = map[int32]string{
+	Name_name = map[int32]string{
 		0: "BTC",
 		1: "ETH",
 		2: "LTC",
 		3: "XRP",
 		4: "BNB",
 	}
-	CryptosName_value = map[string]int32{
+	Name_value = map[string]int32{
 		"BTC": 0,
 		"ETH": 1,
 		"LTC": 2,
@@ -48,45 +48,43 @@ var (
 	}
 )
 
-func (x CryptosName) Enum() *CryptosName {
-	p := new(CryptosName)
+func (x Name) Enum() *Name {
+	p := new(Name)
 	*p = x
 	return p
 }
 
-func (x CryptosName) String() string {
+func (x Name) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (CryptosName) Descriptor() protoreflect.EnumDescriptor {
+func (Name) Descriptor() protoreflect.EnumDescriptor {
 	return file_src_proto_vote_proto_enumTypes[0].Descriptor()
 }
 
-func (CryptosName) Type() protoreflect.EnumType {
+func (Name) Type() protoreflect.EnumType {
 	return &file_src_proto_vote_proto_enumTypes[0]
 }
 
-func (x CryptosName) Number() protoreflect.EnumNumber {
+func (x Name) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use CryptosName.Descriptor instead.
-func (CryptosName) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use Name.Descriptor instead.
+func (Name) EnumDescriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{0}
 }
 
-type Crypto struct {
+type UpvoteReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name     CryptosName `protobuf:"varint,1,opt,name=name,proto3,enum=CryptosName" json:"name,omitempty"`
-	Upvote   bool        `protobuf:"varint,2,opt,name=upvote,proto3" json:"upvote,omitempty"`
-	Downvote bool        `protobuf:"varint,3,opt,name=downvote,proto3" json:"downvote,omitempty"`
+	Name Name `protobuf:"varint,1,opt,name=name,proto3,enum=Name" json:"name,omitempty"`
 }
 
-func (x *Crypto) Reset() {
-	*x = Crypto{}
+func (x *UpvoteReq) Reset() {
+	*x = UpvoteReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[0]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -94,13 +92,13 @@ func (x *Crypto) Reset() {
 	}
 }
 
-func (x *Crypto) String() string {
+func (x *UpvoteReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Crypto) ProtoMessage() {}
+func (*UpvoteReq) ProtoMessage() {}
 
-func (x *Crypto) ProtoReflect() protoreflect.Message {
+func (x *UpvoteReq) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[0]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -112,44 +110,28 @@ func (x *Crypto) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Crypto.ProtoReflect.Descriptor instead.
-func (*Crypto) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpvoteReq.ProtoReflect.Descriptor instead.
+func (*UpvoteReq) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Crypto) GetName() CryptosName {
+func (x *UpvoteReq) GetName() Name {
 	if x != nil {
 		return x.Name
 	}
-	return CryptosName_BTC
+	return Name_BTC
 }
 
-func (x *Crypto) GetUpvote() bool {
-	if x != nil {
-		return x.Upvote
-	}
-	return false
-}
-
-func (x *Crypto) GetDownvote() bool {
-	if x != nil {
-		return x.Downvote
-	}
-	return false
-}
-
-type Vote struct {
+type UpvoteRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id      string    `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Author  string    `protobuf:"bytes,2,opt,name=author,proto3" json:"author,omitempty"`
-	Cryptos []*Crypto `protobuf:"bytes,3,rep,name=cryptos,proto3" json:"cryptos,omitempty"`
+	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 }
 
-func (x *Vote) Reset() {
-	*x = Vote{}
+func (x *UpvoteRes) Reset() {
+	*x = UpvoteRes{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[1]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -157,13 +139,13 @@ func (x *Vote) Reset() {
 	}
 }
 
-func (x *Vote) String() string {
+func (x *UpvoteRes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*Vote) ProtoMessage() {}
+func (*UpvoteRes) ProtoMessage() {}
 
-func (x *Vote) ProtoReflect() protoreflect.Message {
+func (x *UpvoteRes) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[1]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -175,42 +157,28 @@ func (x *Vote) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use Vote.ProtoReflect.Descriptor instead.
-func (*Vote) Descriptor() ([]byte, []int) {
+// Deprecated: Use UpvoteRes.ProtoReflect.Descriptor instead.
+func (*UpvoteRes) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Vote) GetId() string {
+func (x *UpvoteRes) GetSuccess() bool {
 	if x != nil {
-		return x.Id
+		return x.Success
 	}
-	return ""
+	return false
 }
 
-func (x *Vote) GetAuthor() string {
-	if x != nil {
-		return x.Author
-	}
-	return ""
-}
-
-func (x *Vote) GetCryptos() []*Crypto {
-	if x != nil {
-		return x.Cryptos
-	}
-	return nil
-}
-
-type CreateVoteReq struct {
+type DownvoteReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vote *Vote `protobuf:"bytes,1,opt,name=vote,proto3" json:"vote,omitempty"`
+	Name Name `protobuf:"varint,1,opt,name=name,proto3,enum=Name" json:"name,omitempty"`
 }
 
-func (x *CreateVoteReq) Reset() {
-	*x = CreateVoteReq{}
+func (x *DownvoteReq) Reset() {
+	*x = DownvoteReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -218,13 +186,13 @@ func (x *CreateVoteReq) Reset() {
 	}
 }
 
-func (x *CreateVoteReq) String() string {
+func (x *DownvoteReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateVoteReq) ProtoMessage() {}
+func (*DownvoteReq) ProtoMessage() {}
 
-func (x *CreateVoteReq) ProtoReflect() protoreflect.Message {
+func (x *DownvoteReq) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -236,19 +204,19 @@ func (x *CreateVoteReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateVoteReq.ProtoReflect.Descriptor instead.
-func (*CreateVoteReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use DownvoteReq.ProtoReflect.Descriptor instead.
+func (*DownvoteReq) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *CreateVoteReq) GetVote() *Vote {
+func (x *DownvoteReq) GetName() Name {
 	if x != nil {
-		return x.Vote
+		return x.Name
 	}
-	return nil
+	return Name_BTC
 }
 
-type CreateVoteRes struct {
+type DownvoteRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -256,8 +224,8 @@ type CreateVoteRes struct {
 	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 }
 
-func (x *CreateVoteRes) Reset() {
-	*x = CreateVoteRes{}
+func (x *DownvoteRes) Reset() {
+	*x = DownvoteRes{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -265,13 +233,13 @@ func (x *CreateVoteRes) Reset() {
 	}
 }
 
-func (x *CreateVoteRes) String() string {
+func (x *DownvoteRes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateVoteRes) ProtoMessage() {}
+func (*DownvoteRes) ProtoMessage() {}
 
-func (x *CreateVoteRes) ProtoReflect() protoreflect.Message {
+func (x *DownvoteRes) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -283,28 +251,28 @@ func (x *CreateVoteRes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateVoteRes.ProtoReflect.Descriptor instead.
-func (*CreateVoteRes) Descriptor() ([]byte, []int) {
+// Deprecated: Use DownvoteRes.ProtoReflect.Descriptor instead.
+func (*DownvoteRes) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *CreateVoteRes) GetSuccess() bool {
+func (x *DownvoteRes) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type UpdateVoteReq struct {
+type CreateCryptoReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vote *Vote `protobuf:"bytes,1,opt,name=vote,proto3" json:"vote,omitempty"`
+	Name Name `protobuf:"varint,1,opt,name=name,proto3,enum=Name" json:"name,omitempty"`
 }
 
-func (x *UpdateVoteReq) Reset() {
-	*x = UpdateVoteReq{}
+func (x *CreateCryptoReq) Reset() {
+	*x = CreateCryptoReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -312,13 +280,13 @@ func (x *UpdateVoteReq) Reset() {
 	}
 }
 
-func (x *UpdateVoteReq) String() string {
+func (x *CreateCryptoReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateVoteReq) ProtoMessage() {}
+func (*CreateCryptoReq) ProtoMessage() {}
 
-func (x *UpdateVoteReq) ProtoReflect() protoreflect.Message {
+func (x *CreateCryptoReq) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -330,19 +298,19 @@ func (x *UpdateVoteReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateVoteReq.ProtoReflect.Descriptor instead.
-func (*UpdateVoteReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateCryptoReq.ProtoReflect.Descriptor instead.
+func (*CreateCryptoReq) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *UpdateVoteReq) GetVote() *Vote {
+func (x *CreateCryptoReq) GetName() Name {
 	if x != nil {
-		return x.Vote
+		return x.Name
 	}
-	return nil
+	return Name_BTC
 }
 
-type UpdateVoteRes struct {
+type CreateCryptoRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -350,8 +318,8 @@ type UpdateVoteRes struct {
 	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 }
 
-func (x *UpdateVoteRes) Reset() {
-	*x = UpdateVoteRes{}
+func (x *CreateCryptoRes) Reset() {
+	*x = CreateCryptoRes{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -359,13 +327,13 @@ func (x *UpdateVoteRes) Reset() {
 	}
 }
 
-func (x *UpdateVoteRes) String() string {
+func (x *CreateCryptoRes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*UpdateVoteRes) ProtoMessage() {}
+func (*CreateCryptoRes) ProtoMessage() {}
 
-func (x *UpdateVoteRes) ProtoReflect() protoreflect.Message {
+func (x *CreateCryptoRes) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -377,19 +345,19 @@ func (x *UpdateVoteRes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use UpdateVoteRes.ProtoReflect.Descriptor instead.
-func (*UpdateVoteRes) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateCryptoRes.ProtoReflect.Descriptor instead.
+func (*CreateCryptoRes) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *UpdateVoteRes) GetSuccess() bool {
+func (x *CreateCryptoRes) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type DeleteVoteReq struct {
+type DeleteCryptoReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -397,8 +365,8 @@ type DeleteVoteReq struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *DeleteVoteReq) Reset() {
-	*x = DeleteVoteReq{}
+func (x *DeleteCryptoReq) Reset() {
+	*x = DeleteCryptoReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -406,13 +374,13 @@ func (x *DeleteVoteReq) Reset() {
 	}
 }
 
-func (x *DeleteVoteReq) String() string {
+func (x *DeleteCryptoReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteVoteReq) ProtoMessage() {}
+func (*DeleteCryptoReq) ProtoMessage() {}
 
-func (x *DeleteVoteReq) ProtoReflect() protoreflect.Message {
+func (x *DeleteCryptoReq) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -424,19 +392,19 @@ func (x *DeleteVoteReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteVoteReq.ProtoReflect.Descriptor instead.
-func (*DeleteVoteReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteCryptoReq.ProtoReflect.Descriptor instead.
+func (*DeleteCryptoReq) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *DeleteVoteReq) GetId() string {
+func (x *DeleteCryptoReq) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-type DeleteVoteRes struct {
+type DeleteCryptoRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -444,8 +412,8 @@ type DeleteVoteRes struct {
 	Success bool `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 }
 
-func (x *DeleteVoteRes) Reset() {
-	*x = DeleteVoteRes{}
+func (x *DeleteCryptoRes) Reset() {
+	*x = DeleteCryptoRes{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -453,13 +421,13 @@ func (x *DeleteVoteRes) Reset() {
 	}
 }
 
-func (x *DeleteVoteRes) String() string {
+func (x *DeleteCryptoRes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*DeleteVoteRes) ProtoMessage() {}
+func (*DeleteCryptoRes) ProtoMessage() {}
 
-func (x *DeleteVoteRes) ProtoReflect() protoreflect.Message {
+func (x *DeleteCryptoRes) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -471,28 +439,26 @@ func (x *DeleteVoteRes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use DeleteVoteRes.ProtoReflect.Descriptor instead.
-func (*DeleteVoteRes) Descriptor() ([]byte, []int) {
+// Deprecated: Use DeleteCryptoRes.ProtoReflect.Descriptor instead.
+func (*DeleteCryptoRes) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *DeleteVoteRes) GetSuccess() bool {
+func (x *DeleteCryptoRes) GetSuccess() bool {
 	if x != nil {
 		return x.Success
 	}
 	return false
 }
 
-type ReadVoteReq struct {
+type RecordVotesReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
-
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *ReadVoteReq) Reset() {
-	*x = ReadVoteReq{}
+func (x *RecordVotesReq) Reset() {
+	*x = RecordVotesReq{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -500,13 +466,13 @@ func (x *ReadVoteReq) Reset() {
 	}
 }
 
-func (x *ReadVoteReq) String() string {
+func (x *RecordVotesReq) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReadVoteReq) ProtoMessage() {}
+func (*RecordVotesReq) ProtoMessage() {}
 
-func (x *ReadVoteReq) ProtoReflect() protoreflect.Message {
+func (x *RecordVotesReq) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -518,28 +484,23 @@ func (x *ReadVoteReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReadVoteReq.ProtoReflect.Descriptor instead.
-func (*ReadVoteReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use RecordVotesReq.ProtoReflect.Descriptor instead.
+func (*RecordVotesReq) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *ReadVoteReq) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-type ReadVoteRes struct {
+type Record struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Vote *Vote `protobuf:"bytes,1,opt,name=vote,proto3" json:"vote,omitempty"`
+	Name     Name `protobuf:"varint,1,opt,name=name,proto3,enum=Name" json:"name,omitempty"`
+	Upvote   bool `protobuf:"varint,2,opt,name=upvote,proto3" json:"upvote,omitempty"`
+	Downvote bool `protobuf:"varint,3,opt,name=downvote,proto3" json:"downvote,omitempty"`
 }
 
-func (x *ReadVoteRes) Reset() {
-	*x = ReadVoteRes{}
+func (x *Record) Reset() {
+	*x = Record{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -547,13 +508,13 @@ func (x *ReadVoteRes) Reset() {
 	}
 }
 
-func (x *ReadVoteRes) String() string {
+func (x *Record) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ReadVoteRes) ProtoMessage() {}
+func (*Record) ProtoMessage() {}
 
-func (x *ReadVoteRes) ProtoReflect() protoreflect.Message {
+func (x *Record) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -565,26 +526,42 @@ func (x *ReadVoteRes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ReadVoteRes.ProtoReflect.Descriptor instead.
-func (*ReadVoteRes) Descriptor() ([]byte, []int) {
+// Deprecated: Use Record.ProtoReflect.Descriptor instead.
+func (*Record) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *ReadVoteRes) GetVote() *Vote {
+func (x *Record) GetName() Name {
 	if x != nil {
-		return x.Vote
+		return x.Name
 	}
-	return nil
+	return Name_BTC
 }
 
-type ListVotesReq struct {
+func (x *Record) GetUpvote() bool {
+	if x != nil {
+		return x.Upvote
+	}
+	return false
+}
+
+func (x *Record) GetDownvote() bool {
+	if x != nil {
+		return x.Downvote
+	}
+	return false
+}
+
+type RecordVotesRes struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
+
+	Record []*Record `protobuf:"bytes,1,rep,name=record,proto3" json:"record,omitempty"`
 }
 
-func (x *ListVotesReq) Reset() {
-	*x = ListVotesReq{}
+func (x *RecordVotesRes) Reset() {
+	*x = RecordVotesRes{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_src_proto_vote_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -592,13 +569,13 @@ func (x *ListVotesReq) Reset() {
 	}
 }
 
-func (x *ListVotesReq) String() string {
+func (x *RecordVotesRes) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListVotesReq) ProtoMessage() {}
+func (*RecordVotesRes) ProtoMessage() {}
 
-func (x *ListVotesReq) ProtoReflect() protoreflect.Message {
+func (x *RecordVotesRes) ProtoReflect() protoreflect.Message {
 	mi := &file_src_proto_vote_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -610,54 +587,14 @@ func (x *ListVotesReq) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListVotesReq.ProtoReflect.Descriptor instead.
-func (*ListVotesReq) Descriptor() ([]byte, []int) {
+// Deprecated: Use RecordVotesRes.ProtoReflect.Descriptor instead.
+func (*RecordVotesRes) Descriptor() ([]byte, []int) {
 	return file_src_proto_vote_proto_rawDescGZIP(), []int{10}
 }
 
-type ListVotesRes struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Cryptos []*Crypto `protobuf:"bytes,1,rep,name=cryptos,proto3" json:"cryptos,omitempty"`
-}
-
-func (x *ListVotesRes) Reset() {
-	*x = ListVotesRes{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_src_proto_vote_proto_msgTypes[11]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ListVotesRes) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListVotesRes) ProtoMessage() {}
-
-func (x *ListVotesRes) ProtoReflect() protoreflect.Message {
-	mi := &file_src_proto_vote_proto_msgTypes[11]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListVotesRes.ProtoReflect.Descriptor instead.
-func (*ListVotesRes) Descriptor() ([]byte, []int) {
-	return file_src_proto_vote_proto_rawDescGZIP(), []int{11}
-}
-
-func (x *ListVotesRes) GetCryptos() []*Crypto {
+func (x *RecordVotesRes) GetRecord() []*Record {
 	if x != nil {
-		return x.Cryptos
+		return x.Record
 	}
 	return nil
 }
@@ -666,63 +603,58 @@ var File_src_proto_vote_proto protoreflect.FileDescriptor
 
 var file_src_proto_vote_proto_rawDesc = []byte{
 	0x0a, 0x14, 0x73, 0x72, 0x63, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x76, 0x6f, 0x74, 0x65,
-	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x5e, 0x0a, 0x06, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f,
-	0x12, 0x20, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x0c,
-	0x2e, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x73, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x70, 0x76, 0x6f, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01,
-	0x28, 0x08, 0x52, 0x06, 0x75, 0x70, 0x76, 0x6f, 0x74, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x6f,
-	0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x64, 0x6f,
-	0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x22, 0x51, 0x0a, 0x04, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x0e,
-	0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x12, 0x16,
-	0x0a, 0x06, 0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
-	0x61, 0x75, 0x74, 0x68, 0x6f, 0x72, 0x12, 0x21, 0x0a, 0x07, 0x63, 0x72, 0x79, 0x70, 0x74, 0x6f,
-	0x73, 0x18, 0x03, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x07, 0x2e, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f,
-	0x52, 0x07, 0x63, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x73, 0x22, 0x2a, 0x0a, 0x0d, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x12, 0x19, 0x0a, 0x04, 0x76, 0x6f,
-	0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x05, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52,
-	0x04, 0x76, 0x6f, 0x74, 0x65, 0x22, 0x29, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x56,
-	0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73,
-	0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73,
-	0x22, 0x2a, 0x0a, 0x0d, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65,
-	0x71, 0x12, 0x19, 0x0a, 0x04, 0x76, 0x6f, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x05, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x04, 0x76, 0x6f, 0x74, 0x65, 0x22, 0x29, 0x0a, 0x0d,
-	0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a,
-	0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07,
-	0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x1f, 0x0a, 0x0d, 0x44, 0x65, 0x6c, 0x65, 0x74,
-	0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
-	0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x29, 0x0a, 0x0d, 0x44, 0x65, 0x6c, 0x65,
-	0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x26, 0x0a, 0x09, 0x55, 0x70, 0x76, 0x6f, 0x74, 0x65,
+	0x52, 0x65, 0x71, 0x12, 0x19, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x0e, 0x32, 0x05, 0x2e, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x25,
+	0x0a, 0x09, 0x55, 0x70, 0x76, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73,
+	0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75,
+	0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x28, 0x0a, 0x0b, 0x44, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74,
+	0x65, 0x52, 0x65, 0x71, 0x12, 0x19, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0e, 0x32, 0x05, 0x2e, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22,
+	0x27, 0x0a, 0x0b, 0x44, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x18,
+	0x0a, 0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52,
+	0x07, 0x73, 0x75, 0x63, 0x63, 0x65, 0x73, 0x73, 0x22, 0x2c, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x65, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x19, 0x0a, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x05, 0x2e, 0x4e, 0x61, 0x6d, 0x65,
+	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x2b, 0x0a, 0x0f, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65,
+	0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63,
 	0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63,
-	0x65, 0x73, 0x73, 0x22, 0x1d, 0x0a, 0x0b, 0x52, 0x65, 0x61, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x52,
-	0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02,
-	0x69, 0x64, 0x22, 0x28, 0x0a, 0x0b, 0x52, 0x65, 0x61, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65,
-	0x73, 0x12, 0x19, 0x0a, 0x04, 0x76, 0x6f, 0x74, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32,
-	0x05, 0x2e, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x04, 0x76, 0x6f, 0x74, 0x65, 0x22, 0x0e, 0x0a, 0x0c,
-	0x4c, 0x69, 0x73, 0x74, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x22, 0x31, 0x0a, 0x0c,
-	0x4c, 0x69, 0x73, 0x74, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x12, 0x21, 0x0a, 0x07,
-	0x63, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x07, 0x2e,
-	0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x52, 0x07, 0x63, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x73, 0x2a,
-	0x3a, 0x0a, 0x0b, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x73, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x07,
-	0x0a, 0x03, 0x42, 0x54, 0x43, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x45, 0x54, 0x48, 0x10, 0x01,
-	0x12, 0x07, 0x0a, 0x03, 0x4c, 0x54, 0x43, 0x10, 0x02, 0x12, 0x07, 0x0a, 0x03, 0x58, 0x52, 0x50,
-	0x10, 0x03, 0x12, 0x07, 0x0a, 0x03, 0x42, 0x4e, 0x42, 0x10, 0x04, 0x32, 0xed, 0x01, 0x0a, 0x0c,
-	0x53, 0x63, 0x6f, 0x72, 0x65, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x2c, 0x0a, 0x0a,
-	0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x0e, 0x2e, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x0e, 0x2e, 0x43, 0x72, 0x65,
-	0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x2c, 0x0a, 0x0a, 0x55, 0x70,
-	0x64, 0x61, 0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x0e, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x0e, 0x2e, 0x55, 0x70, 0x64, 0x61, 0x74,
-	0x65, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x2c, 0x0a, 0x0a, 0x44, 0x65, 0x6c, 0x65,
-	0x74, 0x65, 0x56, 0x6f, 0x74, 0x65, 0x12, 0x0e, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56,
-	0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x0e, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56,
-	0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x08, 0x52, 0x65, 0x61, 0x64, 0x56, 0x6f,
-	0x74, 0x65, 0x12, 0x0c, 0x2e, 0x52, 0x65, 0x61, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71,
-	0x1a, 0x0c, 0x2e, 0x52, 0x65, 0x61, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x2b,
-	0x0a, 0x09, 0x4c, 0x69, 0x73, 0x74, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x12, 0x0d, 0x2e, 0x4c, 0x69,
-	0x73, 0x74, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x0d, 0x2e, 0x4c, 0x69, 0x73,
-	0x74, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x30, 0x01, 0x42, 0x11, 0x5a, 0x0f, 0x2e,
-	0x2f, 0x73, 0x72, 0x63, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x65, 0x6e, 0x62, 0x06,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x65, 0x73, 0x73, 0x22, 0x21, 0x0a, 0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x72, 0x79,
+	0x70, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x2b, 0x0a, 0x0f, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x18, 0x0a, 0x07, 0x73, 0x75, 0x63,
+	0x63, 0x65, 0x73, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x08, 0x52, 0x07, 0x73, 0x75, 0x63, 0x63,
+	0x65, 0x73, 0x73, 0x22, 0x10, 0x0a, 0x0e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x56, 0x6f, 0x74,
+	0x65, 0x73, 0x52, 0x65, 0x71, 0x22, 0x57, 0x0a, 0x06, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x12,
+	0x19, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x05, 0x2e,
+	0x4e, 0x61, 0x6d, 0x65, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x75, 0x70,
+	0x76, 0x6f, 0x74, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x08, 0x52, 0x06, 0x75, 0x70, 0x76, 0x6f,
+	0x74, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x64, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x64, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x22, 0x31,
+	0x0a, 0x0e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73,
+	0x12, 0x1f, 0x0a, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x07, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x52, 0x06, 0x72, 0x65, 0x63, 0x6f, 0x72,
+	0x64, 0x2a, 0x33, 0x0a, 0x04, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x07, 0x0a, 0x03, 0x42, 0x54, 0x43,
+	0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x45, 0x54, 0x48, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x4c,
+	0x54, 0x43, 0x10, 0x02, 0x12, 0x07, 0x0a, 0x03, 0x58, 0x52, 0x50, 0x10, 0x03, 0x12, 0x07, 0x0a,
+	0x03, 0x42, 0x4e, 0x42, 0x10, 0x04, 0x32, 0xf3, 0x01, 0x0a, 0x0c, 0x56, 0x6f, 0x74, 0x65, 0x73,
+	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x20, 0x0a, 0x06, 0x55, 0x70, 0x76, 0x6f, 0x74,
+	0x65, 0x12, 0x0a, 0x2e, 0x55, 0x70, 0x76, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x71, 0x1a, 0x0a, 0x2e,
+	0x55, 0x70, 0x76, 0x6f, 0x74, 0x65, 0x52, 0x65, 0x73, 0x12, 0x26, 0x0a, 0x08, 0x44, 0x6f, 0x77,
+	0x6e, 0x76, 0x6f, 0x74, 0x65, 0x12, 0x0c, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65,
+	0x52, 0x65, 0x71, 0x1a, 0x0c, 0x2e, 0x44, 0x6f, 0x77, 0x6e, 0x76, 0x6f, 0x74, 0x65, 0x52, 0x65,
+	0x73, 0x12, 0x32, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x72, 0x79, 0x70, 0x74,
+	0x6f, 0x12, 0x10, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x72, 0x79, 0x70, 0x74, 0x6f,
+	0x52, 0x65, 0x71, 0x1a, 0x10, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x43, 0x72, 0x79, 0x70,
+	0x74, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x32, 0x0a, 0x0c, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43,
+	0x72, 0x79, 0x70, 0x74, 0x6f, 0x12, 0x10, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x43, 0x72,
+	0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x71, 0x1a, 0x10, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x43, 0x72, 0x79, 0x70, 0x74, 0x6f, 0x52, 0x65, 0x73, 0x12, 0x31, 0x0a, 0x0b, 0x52, 0x65, 0x63,
+	0x6f, 0x72, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x12, 0x0f, 0x2e, 0x52, 0x65, 0x63, 0x6f, 0x72,
+	0x64, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x0f, 0x2e, 0x52, 0x65, 0x63, 0x6f,
+	0x72, 0x64, 0x56, 0x6f, 0x74, 0x65, 0x73, 0x52, 0x65, 0x73, 0x30, 0x01, 0x42, 0x11, 0x5a, 0x0f,
+	0x2e, 0x2f, 0x73, 0x72, 0x63, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x65, 0x6e, 0x62,
+	0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -738,44 +670,42 @@ func file_src_proto_vote_proto_rawDescGZIP() []byte {
 }
 
 var file_src_proto_vote_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_src_proto_vote_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_src_proto_vote_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_src_proto_vote_proto_goTypes = []interface{}{
-	(CryptosName)(0),      // 0: CryptosName
-	(*Crypto)(nil),        // 1: Crypto
-	(*Vote)(nil),          // 2: Vote
-	(*CreateVoteReq)(nil), // 3: CreateVoteReq
-	(*CreateVoteRes)(nil), // 4: CreateVoteRes
-	(*UpdateVoteReq)(nil), // 5: UpdateVoteReq
-	(*UpdateVoteRes)(nil), // 6: UpdateVoteRes
-	(*DeleteVoteReq)(nil), // 7: DeleteVoteReq
-	(*DeleteVoteRes)(nil), // 8: DeleteVoteRes
-	(*ReadVoteReq)(nil),   // 9: ReadVoteReq
-	(*ReadVoteRes)(nil),   // 10: ReadVoteRes
-	(*ListVotesReq)(nil),  // 11: ListVotesReq
-	(*ListVotesRes)(nil),  // 12: ListVotesRes
+	(Name)(0),               // 0: Name
+	(*UpvoteReq)(nil),       // 1: UpvoteReq
+	(*UpvoteRes)(nil),       // 2: UpvoteRes
+	(*DownvoteReq)(nil),     // 3: DownvoteReq
+	(*DownvoteRes)(nil),     // 4: DownvoteRes
+	(*CreateCryptoReq)(nil), // 5: CreateCryptoReq
+	(*CreateCryptoRes)(nil), // 6: CreateCryptoRes
+	(*DeleteCryptoReq)(nil), // 7: DeleteCryptoReq
+	(*DeleteCryptoRes)(nil), // 8: DeleteCryptoRes
+	(*RecordVotesReq)(nil),  // 9: RecordVotesReq
+	(*Record)(nil),          // 10: Record
+	(*RecordVotesRes)(nil),  // 11: RecordVotesRes
 }
 var file_src_proto_vote_proto_depIdxs = []int32{
-	0,  // 0: Crypto.name:type_name -> CryptosName
-	1,  // 1: Vote.cryptos:type_name -> Crypto
-	2,  // 2: CreateVoteReq.vote:type_name -> Vote
-	2,  // 3: UpdateVoteReq.vote:type_name -> Vote
-	2,  // 4: ReadVoteRes.vote:type_name -> Vote
-	1,  // 5: ListVotesRes.cryptos:type_name -> Crypto
-	3,  // 6: ScoreService.CreateVote:input_type -> CreateVoteReq
-	5,  // 7: ScoreService.UpdateVote:input_type -> UpdateVoteReq
-	7,  // 8: ScoreService.DeleteVote:input_type -> DeleteVoteReq
-	9,  // 9: ScoreService.ReadVote:input_type -> ReadVoteReq
-	11, // 10: ScoreService.ListVotes:input_type -> ListVotesReq
-	4,  // 11: ScoreService.CreateVote:output_type -> CreateVoteRes
-	6,  // 12: ScoreService.UpdateVote:output_type -> UpdateVoteRes
-	8,  // 13: ScoreService.DeleteVote:output_type -> DeleteVoteRes
-	10, // 14: ScoreService.ReadVote:output_type -> ReadVoteRes
-	12, // 15: ScoreService.ListVotes:output_type -> ListVotesRes
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	0,  // 0: UpvoteReq.name:type_name -> Name
+	0,  // 1: DownvoteReq.name:type_name -> Name
+	0,  // 2: CreateCryptoReq.name:type_name -> Name
+	0,  // 3: Record.name:type_name -> Name
+	10, // 4: RecordVotesRes.record:type_name -> Record
+	1,  // 5: VotesService.Upvote:input_type -> UpvoteReq
+	3,  // 6: VotesService.Downvote:input_type -> DownvoteReq
+	5,  // 7: VotesService.CreateCrypto:input_type -> CreateCryptoReq
+	7,  // 8: VotesService.DeleteCrypto:input_type -> DeleteCryptoReq
+	9,  // 9: VotesService.RecordVotes:input_type -> RecordVotesReq
+	2,  // 10: VotesService.Upvote:output_type -> UpvoteRes
+	4,  // 11: VotesService.Downvote:output_type -> DownvoteRes
+	6,  // 12: VotesService.CreateCrypto:output_type -> CreateCryptoRes
+	8,  // 13: VotesService.DeleteCrypto:output_type -> DeleteCryptoRes
+	11, // 14: VotesService.RecordVotes:output_type -> RecordVotesRes
+	10, // [10:15] is the sub-list for method output_type
+	5,  // [5:10] is the sub-list for method input_type
+	5,  // [5:5] is the sub-list for extension type_name
+	5,  // [5:5] is the sub-list for extension extendee
+	0,  // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_src_proto_vote_proto_init() }
@@ -785,7 +715,7 @@ func file_src_proto_vote_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_src_proto_vote_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Crypto); i {
+			switch v := v.(*UpvoteReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -797,7 +727,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*Vote); i {
+			switch v := v.(*UpvoteRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -809,7 +739,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateVoteReq); i {
+			switch v := v.(*DownvoteReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -821,7 +751,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*CreateVoteRes); i {
+			switch v := v.(*DownvoteRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -833,7 +763,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateVoteReq); i {
+			switch v := v.(*CreateCryptoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -845,7 +775,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*UpdateVoteRes); i {
+			switch v := v.(*CreateCryptoRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -857,7 +787,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteVoteReq); i {
+			switch v := v.(*DeleteCryptoReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -869,7 +799,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteVoteRes); i {
+			switch v := v.(*DeleteCryptoRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -881,7 +811,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReadVoteReq); i {
+			switch v := v.(*RecordVotesReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -893,7 +823,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ReadVoteRes); i {
+			switch v := v.(*Record); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -905,19 +835,7 @@ func file_src_proto_vote_proto_init() {
 			}
 		}
 		file_src_proto_vote_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListVotesReq); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_src_proto_vote_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ListVotesRes); i {
+			switch v := v.(*RecordVotesRes); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -935,7 +853,7 @@ func file_src_proto_vote_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_src_proto_vote_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   12,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

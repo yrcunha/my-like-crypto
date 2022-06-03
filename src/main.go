@@ -42,7 +42,7 @@ func main() {
 		Collection: collection,
 	}
 	grpcServer := grpc.NewServer()
-	gen.RegisterScoreServiceServer(grpcServer, &vote)
+	gen.RegisterVotesServiceServer(grpcServer, &vote)
 	log.Printf("Listening on Port %v!", os.Getenv("PORT"))
 	if grpcError := grpcServer.Serve(listen); grpcError != nil {
 		log.Fatalf("failed to serve: %s", grpcError)

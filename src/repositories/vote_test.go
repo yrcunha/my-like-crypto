@@ -7,6 +7,8 @@ import (
 	"exemple.com/my-like-crypto-server/src/model"
 	"exemple.com/my-like-crypto-server/src/repositories"
 	"github.com/stretchr/testify/assert"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -17,30 +19,33 @@ var (
 	client, _     = mongo.Connect(ctx, clientOptions)
 	_             = client.Ping(ctx, nil)
 	collection    = client.Database("my-like-crypto-test").Collection("vote-test")
-	votes         = &model.Votes{}
+	votes         = &model.Crypto{}
 )
 
-func TestCreateRepositories(t *testing.T) {
-	votes.ID = "6a4493a4-a449-4e43-b971-2f42eb591d9f"
-	createError := repositorie.CreateVotes(collection, ctx, votes)
-	assert.Nil(t, createError)
-	collection.Drop(ctx)
+func TestUpvoteOrDownvoteRepositories(t *testing.T) {
+	votes.Name = "BTC"
+	upvoteError := repositorie.UpvoteOrDownvote(collection, ctx, votes, true)
+	assert.Nil(t, upvoteError)
+	downvoteError := repositorie.UpvoteOrDownvote(collection, ctx, votes, false)
+	assert.Nil(t, downvoteError)
 }
 
-func TestUpdateRepositories(t *testing.T) {
-	votes.ID = "8353374a-efab-4401-b500-6da0101acc03"
-	votes.Author = "Leoncio"
-	votes.MyVotes[0].Name = "BTC"
-	repositorie.CreateVotes(collection, ctx, votes)
-	updateError := repositorie.UpdateVotes(collection, ctx, votes)
-	assert.Nil(t, updateError)
-	collection.Drop(ctx)
+func TestCreateRepositories(t *testing.T) {
+	data := &model.Data{Name: "ETH", Upvote: 0, Downvote: 0}
+	createError := repositorie.CreateCrypto(collection, ctx, data)
+	assert.Nil(t, createError)
 }
 
 func TestDeleteRepositories(t *testing.T) {
-	votes.ID = "f27a3faa-94ba-4c55-839a-06ce259dbdd6"
-	repositorie.CreateVotes(collection, ctx, votes)
-	deleteError := repositorie.DeleteVotes(collection, ctx, votes.ID)
+	id := "f27a3faa-94ba-4c55-839a-06ce259dbdd6"
+	objectId, _ := primitive.ObjectIDFromHex(id)
+	data := bson.M{
+		"_id":      objectId,
+		"crypto":   "ETH",
+		"upvote":   0,
+		"downvote": 0,
+	}
+	collection.InsertOne(ctx, data)
+	deleteError := repositorie.DeleteCrypto(collection, ctx, id)
 	assert.Nil(t, deleteError)
-	collection.Drop(ctx)
 }

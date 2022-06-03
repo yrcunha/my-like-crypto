@@ -1,15 +1,15 @@
 syntax="proto3";
 option go_package = "./src/proto/gen";
 
-service ScoreService {
-  rpc CreateVote(CreateVoteReq) returns (CreateVoteRes);
-  rpc UpdateVote(UpdateVoteReq) returns (UpdateVoteRes);
-  rpc DeleteVote(DeleteVoteReq) returns (DeleteVoteRes);
-  rpc ReadVote(ReadVoteReq) returns (ReadVoteRes);
-  rpc ListVotes(ListVotesReq) returns (stream ListVotesRes);
+service VotesService {
+  rpc Upvote(UpvoteReq) returns (UpvoteRes);
+  rpc Downvote(DownvoteReq) returns (DownvoteRes);
+  rpc CreateCrypto(CreateCryptoReq) returns (CreateCryptoRes);
+  rpc DeleteCrypto(DeleteCryptoReq) returns (DeleteCryptoRes);
+  rpc RecordVotes(RecordVotesReq) returns (stream RecordVotesRes);
 }
 
-enum CryptosName {
+enum Name {
   BTC = 0;
   ETH = 1;
   LTC = 2;
@@ -17,52 +17,46 @@ enum CryptosName {
   BNB = 4;
 }
 
-message Crypto {
-  CryptosName name = 1;
+message UpvoteReq {
+  Name name = 1;
+}
+
+message UpvoteRes {
+  bool success = 1;
+}
+
+message DownvoteReq {
+  Name name = 1;
+}
+
+message DownvoteRes {
+  bool success = 1;
+}
+
+message CreateCryptoReq {
+  Name name = 1;
+}
+
+message CreateCryptoRes {
+  bool success = 1;
+}
+
+message DeleteCryptoReq {
+  string id = 1;
+}
+
+message DeleteCryptoRes {
+  bool success = 1;
+}
+
+message RecordVotesReq {}
+
+message Record {
+  Name name = 1;
   bool upvote = 2;
   bool downvote = 3;
 }
 
-message Vote {
-  string id = 1;
-  string author = 2;
-  repeated Crypto cryptos = 3;
-}
-
-message CreateVoteReq {
-  Vote vote = 1;
-}
-
-message CreateVoteRes {
-  bool success = 1;
-}
-
-message UpdateVoteReq {
-  Vote vote = 1;
-}
-
-message UpdateVoteRes {
-  bool success = 1;
-}
-
-message DeleteVoteReq {
-  string id = 1;
-}
-
-message DeleteVoteRes {
-  bool success = 1;
-}
-
-message ReadVoteReq {
-  string id = 1;
-}
-
-message ReadVoteRes {
-  Vote vote = 1;
-}
-
-message ListVotesReq {}
-
-message ListVotesRes {
-  repeated Crypto cryptos = 1;
+message RecordVotesRes {
+  repeated Record record = 1;
 }

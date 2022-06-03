@@ -18,67 +18,67 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ScoreServiceClient is the client API for ScoreService service.
+// VotesServiceClient is the client API for VotesService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ScoreServiceClient interface {
-	CreateVote(ctx context.Context, in *CreateVoteReq, opts ...grpc.CallOption) (*CreateVoteRes, error)
-	UpdateVote(ctx context.Context, in *UpdateVoteReq, opts ...grpc.CallOption) (*UpdateVoteRes, error)
-	DeleteVote(ctx context.Context, in *DeleteVoteReq, opts ...grpc.CallOption) (*DeleteVoteRes, error)
-	ReadVote(ctx context.Context, in *ReadVoteReq, opts ...grpc.CallOption) (*ReadVoteRes, error)
-	ListVotes(ctx context.Context, in *ListVotesReq, opts ...grpc.CallOption) (ScoreService_ListVotesClient, error)
+type VotesServiceClient interface {
+	Upvote(ctx context.Context, in *UpvoteReq, opts ...grpc.CallOption) (*UpvoteRes, error)
+	Downvote(ctx context.Context, in *DownvoteReq, opts ...grpc.CallOption) (*DownvoteRes, error)
+	CreateCrypto(ctx context.Context, in *CreateCryptoReq, opts ...grpc.CallOption) (*CreateCryptoRes, error)
+	DeleteCrypto(ctx context.Context, in *DeleteCryptoReq, opts ...grpc.CallOption) (*DeleteCryptoRes, error)
+	RecordVotes(ctx context.Context, in *RecordVotesReq, opts ...grpc.CallOption) (VotesService_RecordVotesClient, error)
 }
 
-type scoreServiceClient struct {
+type votesServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewScoreServiceClient(cc grpc.ClientConnInterface) ScoreServiceClient {
-	return &scoreServiceClient{cc}
+func NewVotesServiceClient(cc grpc.ClientConnInterface) VotesServiceClient {
+	return &votesServiceClient{cc}
 }
 
-func (c *scoreServiceClient) CreateVote(ctx context.Context, in *CreateVoteReq, opts ...grpc.CallOption) (*CreateVoteRes, error) {
-	out := new(CreateVoteRes)
-	err := c.cc.Invoke(ctx, "/ScoreService/CreateVote", in, out, opts...)
+func (c *votesServiceClient) Upvote(ctx context.Context, in *UpvoteReq, opts ...grpc.CallOption) (*UpvoteRes, error) {
+	out := new(UpvoteRes)
+	err := c.cc.Invoke(ctx, "/VotesService/Upvote", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *scoreServiceClient) UpdateVote(ctx context.Context, in *UpdateVoteReq, opts ...grpc.CallOption) (*UpdateVoteRes, error) {
-	out := new(UpdateVoteRes)
-	err := c.cc.Invoke(ctx, "/ScoreService/UpdateVote", in, out, opts...)
+func (c *votesServiceClient) Downvote(ctx context.Context, in *DownvoteReq, opts ...grpc.CallOption) (*DownvoteRes, error) {
+	out := new(DownvoteRes)
+	err := c.cc.Invoke(ctx, "/VotesService/Downvote", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *scoreServiceClient) DeleteVote(ctx context.Context, in *DeleteVoteReq, opts ...grpc.CallOption) (*DeleteVoteRes, error) {
-	out := new(DeleteVoteRes)
-	err := c.cc.Invoke(ctx, "/ScoreService/DeleteVote", in, out, opts...)
+func (c *votesServiceClient) CreateCrypto(ctx context.Context, in *CreateCryptoReq, opts ...grpc.CallOption) (*CreateCryptoRes, error) {
+	out := new(CreateCryptoRes)
+	err := c.cc.Invoke(ctx, "/VotesService/CreateCrypto", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *scoreServiceClient) ReadVote(ctx context.Context, in *ReadVoteReq, opts ...grpc.CallOption) (*ReadVoteRes, error) {
-	out := new(ReadVoteRes)
-	err := c.cc.Invoke(ctx, "/ScoreService/ReadVote", in, out, opts...)
+func (c *votesServiceClient) DeleteCrypto(ctx context.Context, in *DeleteCryptoReq, opts ...grpc.CallOption) (*DeleteCryptoRes, error) {
+	out := new(DeleteCryptoRes)
+	err := c.cc.Invoke(ctx, "/VotesService/DeleteCrypto", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *scoreServiceClient) ListVotes(ctx context.Context, in *ListVotesReq, opts ...grpc.CallOption) (ScoreService_ListVotesClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ScoreService_ServiceDesc.Streams[0], "/ScoreService/ListVotes", opts...)
+func (c *votesServiceClient) RecordVotes(ctx context.Context, in *RecordVotesReq, opts ...grpc.CallOption) (VotesService_RecordVotesClient, error) {
+	stream, err := c.cc.NewStream(ctx, &VotesService_ServiceDesc.Streams[0], "/VotesService/RecordVotes", opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &scoreServiceListVotesClient{stream}
+	x := &votesServiceRecordVotesClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -88,188 +88,188 @@ func (c *scoreServiceClient) ListVotes(ctx context.Context, in *ListVotesReq, op
 	return x, nil
 }
 
-type ScoreService_ListVotesClient interface {
-	Recv() (*ListVotesRes, error)
+type VotesService_RecordVotesClient interface {
+	Recv() (*RecordVotesRes, error)
 	grpc.ClientStream
 }
 
-type scoreServiceListVotesClient struct {
+type votesServiceRecordVotesClient struct {
 	grpc.ClientStream
 }
 
-func (x *scoreServiceListVotesClient) Recv() (*ListVotesRes, error) {
-	m := new(ListVotesRes)
+func (x *votesServiceRecordVotesClient) Recv() (*RecordVotesRes, error) {
+	m := new(RecordVotesRes)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-// ScoreServiceServer is the server API for ScoreService service.
-// All implementations must embed UnimplementedScoreServiceServer
+// VotesServiceServer is the server API for VotesService service.
+// All implementations must embed UnimplementedVotesServiceServer
 // for forward compatibility
-type ScoreServiceServer interface {
-	CreateVote(context.Context, *CreateVoteReq) (*CreateVoteRes, error)
-	UpdateVote(context.Context, *UpdateVoteReq) (*UpdateVoteRes, error)
-	DeleteVote(context.Context, *DeleteVoteReq) (*DeleteVoteRes, error)
-	ReadVote(context.Context, *ReadVoteReq) (*ReadVoteRes, error)
-	ListVotes(*ListVotesReq, ScoreService_ListVotesServer) error
-	mustEmbedUnimplementedScoreServiceServer()
+type VotesServiceServer interface {
+	Upvote(context.Context, *UpvoteReq) (*UpvoteRes, error)
+	Downvote(context.Context, *DownvoteReq) (*DownvoteRes, error)
+	CreateCrypto(context.Context, *CreateCryptoReq) (*CreateCryptoRes, error)
+	DeleteCrypto(context.Context, *DeleteCryptoReq) (*DeleteCryptoRes, error)
+	RecordVotes(*RecordVotesReq, VotesService_RecordVotesServer) error
+	mustEmbedUnimplementedVotesServiceServer()
 }
 
-// UnimplementedScoreServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedScoreServiceServer struct {
+// UnimplementedVotesServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedVotesServiceServer struct {
 }
 
-func (UnimplementedScoreServiceServer) CreateVote(context.Context, *CreateVoteReq) (*CreateVoteRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreateVote not implemented")
+func (UnimplementedVotesServiceServer) Upvote(context.Context, *UpvoteReq) (*UpvoteRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Upvote not implemented")
 }
-func (UnimplementedScoreServiceServer) UpdateVote(context.Context, *UpdateVoteReq) (*UpdateVoteRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateVote not implemented")
+func (UnimplementedVotesServiceServer) Downvote(context.Context, *DownvoteReq) (*DownvoteRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Downvote not implemented")
 }
-func (UnimplementedScoreServiceServer) DeleteVote(context.Context, *DeleteVoteReq) (*DeleteVoteRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeleteVote not implemented")
+func (UnimplementedVotesServiceServer) CreateCrypto(context.Context, *CreateCryptoReq) (*CreateCryptoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCrypto not implemented")
 }
-func (UnimplementedScoreServiceServer) ReadVote(context.Context, *ReadVoteReq) (*ReadVoteRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ReadVote not implemented")
+func (UnimplementedVotesServiceServer) DeleteCrypto(context.Context, *DeleteCryptoReq) (*DeleteCryptoRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCrypto not implemented")
 }
-func (UnimplementedScoreServiceServer) ListVotes(*ListVotesReq, ScoreService_ListVotesServer) error {
-	return status.Errorf(codes.Unimplemented, "method ListVotes not implemented")
+func (UnimplementedVotesServiceServer) RecordVotes(*RecordVotesReq, VotesService_RecordVotesServer) error {
+	return status.Errorf(codes.Unimplemented, "method RecordVotes not implemented")
 }
-func (UnimplementedScoreServiceServer) mustEmbedUnimplementedScoreServiceServer() {}
+func (UnimplementedVotesServiceServer) mustEmbedUnimplementedVotesServiceServer() {}
 
-// UnsafeScoreServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ScoreServiceServer will
+// UnsafeVotesServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to VotesServiceServer will
 // result in compilation errors.
-type UnsafeScoreServiceServer interface {
-	mustEmbedUnimplementedScoreServiceServer()
+type UnsafeVotesServiceServer interface {
+	mustEmbedUnimplementedVotesServiceServer()
 }
 
-func RegisterScoreServiceServer(s grpc.ServiceRegistrar, srv ScoreServiceServer) {
-	s.RegisterService(&ScoreService_ServiceDesc, srv)
+func RegisterVotesServiceServer(s grpc.ServiceRegistrar, srv VotesServiceServer) {
+	s.RegisterService(&VotesService_ServiceDesc, srv)
 }
 
-func _ScoreService_CreateVote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateVoteReq)
+func _VotesService_Upvote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpvoteReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScoreServiceServer).CreateVote(ctx, in)
+		return srv.(VotesServiceServer).Upvote(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ScoreService/CreateVote",
+		FullMethod: "/VotesService/Upvote",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScoreServiceServer).CreateVote(ctx, req.(*CreateVoteReq))
+		return srv.(VotesServiceServer).Upvote(ctx, req.(*UpvoteReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScoreService_UpdateVote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateVoteReq)
+func _VotesService_Downvote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DownvoteReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScoreServiceServer).UpdateVote(ctx, in)
+		return srv.(VotesServiceServer).Downvote(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ScoreService/UpdateVote",
+		FullMethod: "/VotesService/Downvote",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScoreServiceServer).UpdateVote(ctx, req.(*UpdateVoteReq))
+		return srv.(VotesServiceServer).Downvote(ctx, req.(*DownvoteReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScoreService_DeleteVote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteVoteReq)
+func _VotesService_CreateCrypto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCryptoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScoreServiceServer).DeleteVote(ctx, in)
+		return srv.(VotesServiceServer).CreateCrypto(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ScoreService/DeleteVote",
+		FullMethod: "/VotesService/CreateCrypto",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScoreServiceServer).DeleteVote(ctx, req.(*DeleteVoteReq))
+		return srv.(VotesServiceServer).CreateCrypto(ctx, req.(*CreateCryptoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScoreService_ReadVote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ReadVoteReq)
+func _VotesService_DeleteCrypto_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCryptoReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ScoreServiceServer).ReadVote(ctx, in)
+		return srv.(VotesServiceServer).DeleteCrypto(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ScoreService/ReadVote",
+		FullMethod: "/VotesService/DeleteCrypto",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ScoreServiceServer).ReadVote(ctx, req.(*ReadVoteReq))
+		return srv.(VotesServiceServer).DeleteCrypto(ctx, req.(*DeleteCryptoReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ScoreService_ListVotes_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(ListVotesReq)
+func _VotesService_RecordVotes_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(RecordVotesReq)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ScoreServiceServer).ListVotes(m, &scoreServiceListVotesServer{stream})
+	return srv.(VotesServiceServer).RecordVotes(m, &votesServiceRecordVotesServer{stream})
 }
 
-type ScoreService_ListVotesServer interface {
-	Send(*ListVotesRes) error
+type VotesService_RecordVotesServer interface {
+	Send(*RecordVotesRes) error
 	grpc.ServerStream
 }
 
-type scoreServiceListVotesServer struct {
+type votesServiceRecordVotesServer struct {
 	grpc.ServerStream
 }
 
-func (x *scoreServiceListVotesServer) Send(m *ListVotesRes) error {
+func (x *votesServiceRecordVotesServer) Send(m *RecordVotesRes) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-// ScoreService_ServiceDesc is the grpc.ServiceDesc for ScoreService service.
+// VotesService_ServiceDesc is the grpc.ServiceDesc for VotesService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ScoreService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "ScoreService",
-	HandlerType: (*ScoreServiceServer)(nil),
+var VotesService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "VotesService",
+	HandlerType: (*VotesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateVote",
-			Handler:    _ScoreService_CreateVote_Handler,
+			MethodName: "Upvote",
+			Handler:    _VotesService_Upvote_Handler,
 		},
 		{
-			MethodName: "UpdateVote",
-			Handler:    _ScoreService_UpdateVote_Handler,
+			MethodName: "Downvote",
+			Handler:    _VotesService_Downvote_Handler,
 		},
 		{
-			MethodName: "DeleteVote",
-			Handler:    _ScoreService_DeleteVote_Handler,
+			MethodName: "CreateCrypto",
+			Handler:    _VotesService_CreateCrypto_Handler,
 		},
 		{
-			MethodName: "ReadVote",
-			Handler:    _ScoreService_ReadVote_Handler,
+			MethodName: "DeleteCrypto",
+			Handler:    _VotesService_DeleteCrypto_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
-			StreamName:    "ListVotes",
-			Handler:       _ScoreService_ListVotes_Handler,
+			StreamName:    "RecordVotes",
+			Handler:       _VotesService_RecordVotes_Handler,
 			ServerStreams: true,
 		},
 	},
