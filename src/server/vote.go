@@ -29,6 +29,32 @@ func (server *Server) CreateVote(ctx context.Context, vote *gen.CreateVoteReq) (
 	}
 }
 
+func (server *Server) UpdateVote(ctx context.Context, vote *gen.UpdateVoteReq) (*gen.UpdateVoteRes, error) {
+	unmarshalVote, unmarshalError := model.UnmarshalVote(vote.Vote)
+	if unmarshalError != nil {
+		return nil, unmarshalError
+	}
+	repositorieError := repositorie.UpdateVotes(server.Collection, ctx, unmarshalVote)
+	if repositorieError != nil {
+		return nil, repositorieError
+	} else {
+		return &gen.UpdateVoteRes{
+			Success: true,
+		}, nil
+	}
+}
+
+func (server *Server) DeleteVote(ctx context.Context, vote *gen.DeleteVoteReq) (*gen.DeleteVoteRes, error) {
+	repositorieError := repositorie.DeleteVotes(server.Collection, ctx, vote.Id)
+	if repositorieError != nil {
+		return nil, repositorieError
+	} else {
+		return &gen.DeleteVoteRes{
+			Success: true,
+		}, nil
+	}
+}
+
 func (server *Server) ListVotes(_ *gen.ListVotesReq, stream gen.ScoreService_ListVotesServer) error {
 	// enviar 5 sends um com cada votação de crypto
 	// melhorar mensagem de retorno, somente com a estatística já definida
