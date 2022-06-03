@@ -3,10 +3,9 @@ package server
 import (
 	"context"
 
-	"exemple.com/my-like-crypto-server/src/model"
-	"exemple.com/my-like-crypto-server/src/proto/gen"
-
-	"exemple.com/my-like-crypto-server/src/repositories"
+	"github.com/yrcunha/my-like-crypto-server/src/model"
+	"github.com/yrcunha/my-like-crypto-server/src/proto/gen"
+	"github.com/yrcunha/my-like-crypto-server/src/repositories"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 

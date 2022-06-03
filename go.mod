@@ -1,4 +1,4 @@
-module exemple.com/my-like-crypto-server
+module github.com/yrcunha/my-like-crypto-server
 
 go 1.18
 

@@ -6,9 +6,9 @@ import (
 	"net"
 	"os"
 
-	"exemple.com/my-like-crypto-server/src/proto/gen"
-	"exemple.com/my-like-crypto-server/src/server"
 	"github.com/joho/godotenv"
+	"github.com/yrcunha/my-like-crypto-server/src/proto/gen"
+	"github.com/yrcunha/my-like-crypto-server/src/server"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"

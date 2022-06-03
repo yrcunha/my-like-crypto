@@ -3,7 +3,7 @@ package repositorie
 import (
 	"context"
 
-	"exemple.com/my-like-crypto-server/src/model"
+	"github.com/yrcunha/my-like-crypto-server/src/model"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"

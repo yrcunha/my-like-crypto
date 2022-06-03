@@ -3,9 +3,9 @@ package model_test
 import (
 	"testing"
 
-	"exemple.com/my-like-crypto-server/src/model"
-	"exemple.com/my-like-crypto-server/src/proto/gen"
 	"github.com/stretchr/testify/assert"
+	"github.com/yrcunha/my-like-crypto-server/src/model"
+	"github.com/yrcunha/my-like-crypto-server/src/proto/gen"
 )
 
 func TestUnmarshalVote(t *testing.T) {

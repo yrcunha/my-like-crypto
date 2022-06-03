@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"exemple.com/my-like-crypto-server/src/model"
-	"exemple.com/my-like-crypto-server/src/repositories"
 	"github.com/stretchr/testify/assert"
+	"github.com/yrcunha/my-like-crypto-server/src/model"
+	"github.com/yrcunha/my-like-crypto-server/src/repositories"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
